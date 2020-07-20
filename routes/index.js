@@ -1,47 +1,24 @@
 const express = require("express");
 const router = express.Router();
-const NewsAPI = require("newsapi");
-const newsapi = new NewsAPI(process.env.NEWS_API_KEY);
-const Saved = require("../model/Saved");
+const {
+  getNews,
+  saveNews,
+  getSavedNews,
+} = require("../controller/news.controller");
 
 /**
  * get all news
  */
-router.get("/", function (req, res) {
-  newsapi.v2
-    .topHeadlines({
-      category: "business",
-      language: "en",
-      country: "us",
-    })
-    .then((response) => {
-      res.send(response);
-    })
-    .catch((err) => {
-      res.send(err);
-    });
-});
+router.get("/", getNews);
 
 /**
  * save news
  */
-router.post("/save", function (req, res) {
-  Saved.saveNews(req.body.title, req.body.url)
-    .then(() => {
-      res.send("Done");
-    })
-    .catch((err) => {
-      res.send(err);
-    });
-});
+router.post("/save", saveNews);
 
 /**
  * return saved news
  */
-router.get("/get_saved_news", function (req, res) {
-  Saved.getNews()
-    .then((response) => res.send(response))
-    .catch((err) => res.send(err));
-});
+router.get("/get_saved_news", getSavedNews);
 
 module.exports = router;
