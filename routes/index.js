@@ -27,12 +27,21 @@ router.get("/", function (req, res) {
  */
 router.post("/save", function (req, res) {
   Saved.saveNews(req.body.title, req.body.url)
-    .then((res) => {
+    .then(() => {
       res.send("Done");
     })
     .catch((err) => {
       res.send(err);
     });
+});
+
+/**
+ * return saved news
+ */
+router.get("/get_saved_news", function (req, res) {
+  Saved.getNews()
+    .then((response) => res.send(response))
+    .catch((err) => res.send(err));
 });
 
 module.exports = router;

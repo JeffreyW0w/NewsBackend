@@ -34,18 +34,11 @@ savedSchema.statics.saveNews = function (title, url) {
 
 /**
  * get news
- * @param title
  */
-savedSchema.statics.getNews = function (title) {
-  if (typeof title === "string") {
-    return Saved.findOne({
-      title: title,
-    }).catch((err) => {
-      throw new Error("Failed to get news");
-    });
-  } else {
-    throw new Error("Title type is incorrect");
-  }
+savedSchema.statics.getNews = function () {
+  return Saved.find().catch((err) => {
+    throw new Error("Failed to get news");
+  });
 };
 
 Saved = mongoose.model("Saved", savedSchema);
