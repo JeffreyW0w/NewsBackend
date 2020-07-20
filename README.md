@@ -1,4 +1,4 @@
-# Backend for news
+# News Backend
 
 Back end uses Node.js/Express and MongoDB.
 
